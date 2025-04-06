@@ -1,5 +1,6 @@
 <?php
-include 'C:/xampp/htdocs/careset/model/UserModel.php'; // Include the UserModel with absolute path
+require_once $_SERVER['DOCUMENT_ROOT'] . '/careset/model/UserModel.php';
+
 
 class UserController {
     private $userModel;
@@ -17,18 +18,18 @@ class UserController {
             if ($isAuthenticated) {
                 echo "<script>
                     alert('Login successful!');
-                    window.location.href = '../homepage/homepage.php';
+                    window.location.href = '/careset/homepage';
                 </script>";
                 exit();
             } else {
                 echo "<script>
                     alert('Invalid email or password.');
-                    window.location.href = '../view/user/login.php';
+                    window.location.href = '/careset/view/user/login.php';
                 </script>";
                 exit();
             }
         } else {
-            include '../view/user/login.php'; // Show the login form if not a POST request
+            include __DIR__.'/../view/user/login.php'; 
         }
     }
 
@@ -37,12 +38,15 @@ class UserController {
             $fullname = $_POST['fullname'];
             $email = $_POST['email'];
             $password = $_POST['password'];
-            // Call the model to register the user
             $this->userModel->register($fullname, $email, $password);
-            header("Location: ../view/user/login.php"); // Redirect to login page
+            header("Location: /careset/view/user/login.php"); 
             exit();
+        } else {
+            // Make sure you include the register.php view when not posting
+            include __DIR__.'/../view/user/register.php';
         }
     }
+    
 
     public function logout() {
         session_start();
@@ -56,6 +60,44 @@ class UserController {
             // Handle picture upload
         }
         include '../view/user/changePicture.php';
+    }
+
+    public function schedule() {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $firstname = $_POST['firstname'] ?? '';
+            $lastname = $_POST['lastname'] ?? '';
+            $gender = $_POST['gender'] ?? '';
+            $birthdate = $_POST['birthdate'] ?? '';
+            $appointment_date = $_POST['appointment_date'] ?? '';
+            $diseases = $_POST['disease'] ?? [];
+            
+            // Handle multiple file uploads
+            if (!empty($_FILES['medical_records'])) {
+                $uploadFileDir = 'uploads/';
+                if (!file_exists($uploadFileDir)) {
+                    mkdir($uploadFileDir, 0777, true);
+                }
+                
+                foreach ($_FILES['medical_records']['tmp_name'] as $key => $tmp_name) {
+                    if ($_FILES['medical_records']['error'][$key] === UPLOAD_ERR_OK) {
+                        $fileName = basename($_FILES['medical_records']['name'][$key]);
+                        $dest_path = $uploadFileDir . $fileName;
+                        move_uploaded_file($tmp_name, $dest_path);
+                    }
+                }
+            }
+
+            // Here you would typically call a method to save the appointment details
+            // $this->userModel->saveAppointment($firstname, $lastname, $gender, $birthdate, $diseases, $appointment_date);
+
+            echo "<script>
+                alert('Appointment scheduled successfully!');
+                window.location.href = '/careset/homepage';
+            </script>";
+            exit();
+        } else {
+            include __DIR__.'/../view/Schedule/schedule.php';
+        }
     }
 }
 ?>

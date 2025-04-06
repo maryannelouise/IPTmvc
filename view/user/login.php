@@ -1,7 +1,8 @@
 <?php
 session_start();
-include '../../database/db.php'; // Database connection
-include '../../controller/UserController.php'; // Controller
+
+include $_SERVER['DOCUMENT_ROOT'] . '/careset/database/db.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/careset/controller/UserController.php';
 
 $userController = new UserController();
 
@@ -9,6 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $userController->login(); 
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -142,7 +144,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </form>
 
             <div class="footer">
-                <p>Don't have an account? <a href="register.php">Sign Up</a></p>
+                <p>Don't have an account? <a href="/careset/register">Sign Up</a></p>
             </div>
         </div>
     </div>

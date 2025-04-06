@@ -1,7 +1,11 @@
 <?php
 class HomeController {
     public function index() {
-        include '../view/homepage/index.php'; // Include the homepage view
+        include $_SERVER['DOCUMENT_ROOT'] . '/careset/view/homepage/index.php';
+    }
+
+    public function homepage() {
+        include $_SERVER['DOCUMENT_ROOT'] . '/careset/view/homepage/homepage.php';
     }
 }
 ?>

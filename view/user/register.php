@@ -1,8 +1,5 @@
 <?php
-include '../../database/db.php'; // Updated path
-
-
-
+include $_SERVER['DOCUMENT_ROOT'] . '/careset/database/db.php'; // Ensure db connection works here
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fullname = $_POST['fullname'];
@@ -22,12 +19,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($stmt->execute()) {
             echo "<script>alert('Registration successful!');</script>";
-            header("Location: ../../view/user/login.php");
+            header("Location: /careset/login");
             exit();
         } else {
             echo "<script>alert('Error: " . $stmt->error . "');</script>";
         }
-        
 
         $stmt->close();
     }
@@ -158,9 +154,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="careset">CareSet</div>
         <div class="form-content">
             <h2>Sign Up</h2>
-            <form method="POST" action="../../controller/UserController.php?action=register">
-
-
+            <form method="POST" action="/careset/register">
                 <input type="text" name="fullname" placeholder="Full Name" required>
                 <input type="email" name="email" placeholder="Email" required>
                 <input type="password" name="password" placeholder="Password" required>
@@ -168,7 +162,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <button type="submit" class="btn">Sign Up</button>
             </form>
             <div class="footer">
-                <p>Already have an account? <a href="login.php">Log In</a></p>
+                <p>Already have an account? <a href="/careset/login">Log In</a></p>
             </div>
         </div>
     </div>

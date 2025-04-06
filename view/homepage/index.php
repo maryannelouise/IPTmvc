@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CareSet - Home</title>
-    <?php include '../routes/web.php'; ?> <!-- Updated path -->
 
     <style>
         body {
@@ -22,7 +21,7 @@
             width: 90%;
             max-width: 1300px;
             height: 80vh;
-            background: url('../assets/images/background-doc.png') no-repeat center center;
+            background: url('/careset/assets/images/background-doc.png') no-repeat center center;
             background-size: cover;
             display: flex;
             flex-direction: column;
@@ -76,7 +75,8 @@
     <div class="hero-section">
         <h1>CareSet</h1>
         <p>Where Health Meets Convenience</p>
-        <a href="view/UserView.php" class="btn">Get Started</a>
+        <a href="/careset/login" class="btn">Get Started</a>
+
     </div>
 </body>
 </html>
